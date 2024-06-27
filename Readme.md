@@ -7,49 +7,49 @@ Transform your Magento 2 store into a dynamic event-driven platform with our Boo
 ## Key Features:
 
 - **Dynamic Booking System:**
-  - Create One Booking for Many Days
-  - Create Many Bookings in One Day
+    Create One Booking for Many Days
+    Create Many Bookings in One Day
 - **Slot-Based Quantity Measure:**
-  - Manage available slots efficiently.
+    Manage available slots efficiently.
 - **Event Creation & Display:**
-  - Dynamic event creation with brilliant UI and UX.
+    Dynamic event creation with brilliant UI and UX.
 - **Real-Time Booking:**
-  - Supports real-time booking for hassle-free reservations.
+    Supports real-time booking for hassle-free reservations.
 - **Flexible Time Settings:**
-  - Customizable time slots and break times.
+    Customizable time slots and break times.
 - **Customer Booking Details:**
-  - Customers can view booking details like date and time slots in the cart.
+    Customers can view booking details like date and time slots in the cart.
 - **Built on Magento MVC and ORM System:**
-  - Ensures stability and performance.
+    Ensures stability and performance.
 - **Hyva Theme Compatibility:**
-  - Fully compatible with the Hyva Theme.
+    Fully compatible with the Hyva Theme.
 - **GraphQL Implementation:**
-  - Enhanced performance and flexibility with GraphQL.
+    Enhanced performance and flexibility with GraphQL.
 
 ## Benefits:
 
 - **Seamless Booking Experience:**
-  - Converts your store into an event-driven site (e.g., doctor's appointments, movie bookings).
+    Converts your store into an event-driven site (e.g., doctor's appointments, movie bookings).
 - **Enhanced Customer Satisfaction:**
-  - Customers can easily book products/services according to their needs.
+    Customers can easily book products/services according to their needs.
 - **Operational Efficiency:**
-  - Automates the booking process and ensures accurate availability management.
+    Automates the booking process and ensures accurate availability management.
 - **Increased Revenue Potential:**
-  - Optimizes the booking experience to drive revenue growth.
+    Optimizes the booking experience to drive revenue growth.
 
 ## Types of Bookings:
 
 ### Many Bookings in One Day
-- Set booking time for each slot.
-- Define start and end date and time slots.
-- Specify break times and slot quantities.
-- Manage the status of each day as "Open" or "Close."
+  Set booking time for each slot.
+  Define start and end date and time slots.
+  Specify break times and slot quantities.
+  Manage the status of each day as "Open" or "Close."
 
 ### One Booking for Many Days
-- Set start and end dates for the booking.
-- Define the number of slots available each day.
-- Prevent booking for specified days.
-- Easily update booking details from the backend.
+  Set start and end dates for the booking.
+  Define the number of slots available each day.
+  Prevent booking for specified days.
+  Easily update booking details from the backend.
 
 ## Customer Booking Process:
 
