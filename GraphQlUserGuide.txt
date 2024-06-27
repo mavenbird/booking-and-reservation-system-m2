@@ -1,0 +1,403 @@
+End point :  https://<your store url>/graphql
+1. Use `products` for `search` the booking products or other products:
+Request :
+query {
+  products(search: "booking") {
+    items {
+      id
+      name
+      sku
+      special_price
+      ... on BookingProduct {
+        slot_info{
+          options {
+            id
+            title
+          }
+          parentId
+          prevent_booking_before
+          slots{
+            booking_from
+            booking_to
+            date
+            date_formatted
+            day
+            day1
+            qty
+            month
+            id
+            slot
+            year
+          }
+        }
+      }
+    }
+  }
+}
+
+Response (json):
+{
+  "data": {
+    "products": {
+      "items": [
+        {
+          "id": 1201,
+          "name": "BookingProduct",
+          "sku": "BookingProduct",
+          "special_price": null,
+          "slot_info": {
+            "options": [
+              {
+                "id": 3,
+                "title": "Booking From"
+              },
+              {
+                "id": 4,
+                "title": "Booking Till"
+              }
+            ],
+            "parentId": 1,
+            "prevent_booking_before": 0,
+            "slots": [
+              {
+                "booking_from": "18-07-2023,10:00 am",
+                "booking_to": "18-07-2023,02:00 pm",
+                "date": "18-07-2023",
+                "date_formatted": "18,July 2023",
+                "day": "Tuesday",
+                "day1": "Tue",
+                "qty": "20",
+                "month": "July",
+                "id": "1",
+                "slot": "10:00 - 14:00",
+                "year": "2023"
+              },
+              {
+                "booking_from": "18-07-2023,02:30 pm",
+                "booking_to": "18-07-2023,06:30 pm",
+                "date": "18-07-2023",
+                "date_formatted": "18,July 2023",
+                "day": "Tuesday",
+                "day1": "Tue",
+                "qty": "20",
+                "month": "July",
+                "id": "2",
+                "slot": "14:30 - 18:30",
+                "year": "2023"
+              }
+            ]
+          }
+        },
+        {
+          "id": 99,
+          "name": "booking Product",
+          "sku": "simple_product",
+          "special_price": null
+        }
+      ]
+    }
+  }
+}
+
+2. Use `products` `filter` by `sku` for specific product information merge Booking Product information
+
+{
+  products(filter: { sku: { eq: "BookingProduct2" } }) {
+    items {
+      id
+      name
+      sku
+      special_price
+      ... on BookingProduct {
+        slot_info{
+          options {
+            id
+            title
+          }
+          parentId
+          prevent_booking_before
+          slots{
+            booking_from
+            booking_to
+            date
+            date_formatted
+            day
+            day1
+            qty
+            month
+            id
+            slot
+            year
+          }
+        }
+      }
+    }
+  }
+}
+
+Response (json):
+{
+  "data": {
+    "products": {
+      "items": [
+        {
+          "id": 2043,
+          "name": "BookingProduct2",
+          "sku": "BookingProduct2",
+          "special_price": null,
+          "slot_info": {
+            "options": [
+              {
+                "id": 11,
+                "title": "Booking From"
+              },
+              {
+                "id": 12,
+                "title": "Booking Till"
+              }
+            ],
+            "parentId": 9,
+            "prevent_booking_before": 0,
+            "slotsUrl": "bookingsystem/booking/slots/",
+            "slots": [
+              {
+                "booking_from": "18-07-2023,08:00 am",
+                "booking_to": "18-07-2023,11:00 am",
+                "date": "18-07-2023",
+                "date_formatted": "18,July 2023",
+                "day": "Tuesday",
+                "day1": "Tue",
+                "qty": "0",
+                "month": "July",
+                "id": "1",
+                "slot": "8:00 - 11:00",
+                "year": "2023"
+              },
+              {
+                "booking_from": "18-07-2023,11:10 am",
+                "booking_to": "18-07-2023,02:10 pm",
+                "date": "18-07-2023",
+                "date_formatted": "18,July 2023",
+                "day": "Tuesday",
+                "day1": "Tue",
+                "qty": "0",
+                "month": "July",
+                "id": "2",
+                "slot": "11:10 - 14:10",
+                "year": "2023"
+              },
+              .
+              .
+              .
+              .
+
+              {
+                "booking_from": "20-07-2023,11:10 am",
+                "booking_to": "20-07-2023,02:10 pm",
+                "date": "20-07-2023",
+                "date_formatted": "20,July 2023",
+                "day": "Thursday",
+                "day1": "Thu",
+                "qty": "20",
+                "month": "July",
+                "id": "5",
+                "slot": "11:10 - 14:10",
+                "year": "2023"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+3. Use productSlotData for booking products slots `pid`(product_id) and `date`(YYYY-MM-DD):
+Request
+
+query {
+  productSlotData(
+		pid:2041,
+    date:"2023-07-14"
+  ) {
+    slots
+    {
+      booking_from
+      booking_to
+      date_formatted
+      date
+      day
+      day1
+      id
+      month
+      qty
+      slot
+      year
+    }
+    parent_id
+    avl
+    msg
+  }
+}
+
+Response (json):
+{
+  "data": {
+    "productSlotData": {
+      "slots": [
+        {
+          "booking_from": "14-07-2023,02:00 pm",
+          "booking_to": "14-07-2023,02:30 pm",
+          "date_formatted": "14,July 2023",
+          "date": "14-07-2023",
+          "day": "Friday",
+          "day1": "Fri",
+          "id": "58",
+          "month": "July",
+          "qty": "20",
+          "slot": "14:00 - 14:30",
+          "year": "2023"
+        },
+        {
+          "booking_from": "14-07-2023,02:40 pm",
+          "booking_to": "14-07-2023,03:10 pm",
+          "date_formatted": "14,July 2023",
+          "date": "14-07-2023",
+          "day": "Friday",
+          "day1": "Fri",
+          "id": "59",
+          "month": "July",
+          "qty": "20",
+          "slot": "14:40 - 15:10",
+          "year": "2023"
+        }
+      ],
+      "parent_id": 5,
+      "msg": "success",
+      "avl": "1"
+    }
+  }
+}
+
+4. Use `getCalendarData` along with `pid` (product_id) for get all info about calendar date availability booked-slot,slot-available and slot-not-available
+
+Request
+query {
+  getCalendarData (pid:2043) {
+    availability {
+      date
+      status
+    }
+  }
+}
+
+Response (json):
+
+{
+  "data": {
+    "getCalendarData": {
+      "availability": [
+        {
+          "date": "2023-07-17",
+          "status": "slot-not-available"
+        },
+        {
+          "date": "2023-07-18",
+          "status": "slot-available booked-slot"
+        },
+        {
+          "date": "2023-07-19",
+          "status": "slot-not-available"
+        },
+        {
+          "date": "2023-07-20",
+          "status": "slot-available"
+        }
+      ]
+    }
+  }
+}
+
+5. Use `addBookingProductsToCart` for add Booking Product Into Cart `cart_id`, `parent_id`, `cart_items`. Use `cart_items` for add the options date slot and quantity of the booking product:
+
+Request
+mutation {
+  addBookingProductsToCart(
+    input: {
+      cart_id: "FE5yxTe0uR006hZ0Miq1nNZ5aok3XiCG",
+      parent_id:5
+      cart_items: [
+        {
+          data: 
+          {
+            sku: "BookingProduct", 
+            quantity: 5,
+            slot_id:28
+          }, 
+          customizable_options: [
+            {
+              id: 9, 
+              value_string: "12-07-2023,04:00 pm"
+            }, 
+            {
+              id: 10, 
+              value_string: "12-07-2023,04:30 pm"
+            }
+          ]
+        }, 
+        {
+          data: 
+          {
+            sku: "Booking Product", 
+            quantity: 4,
+            slot_id:29
+          }, 
+          customizable_options: [
+            {
+              id: 9,
+              value_string: "12-07-2023,04:40 pm"
+            }, 
+            {
+              id: 10, 
+              value_string: "12-07-2023,05:10 pm"
+            }
+          ]
+        }
+      ]
+    }
+  ) {
+    cart {
+      items {
+        product {
+          name
+        }
+        quantity
+      }
+    }
+  }
+}
+
+Response (json):
+{
+  "data": {
+    "addBookingProductsToCart": {
+      "cart": {
+        "items": [
+          {
+            "product": {
+              "name": "BookingProduct"
+            },
+            "quantity": 5
+          },
+          {
+            "product": {
+              "name": "BookingProduct"
+            },
+            "quantity": 4
+          }
+        ]
+      }
+    }
+  }
+}

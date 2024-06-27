@@ -1,0 +1,28 @@
+/**
+ * Mavenbird Technologies Private Limited
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://mavenbird.com/Mavenbird-Module-License.txt
+ *
+ * =================================================================
+ *
+ * @category   Mavenbird
+ * @package    Mavenbird_OrderInformation
+ * @author     Mavenbird Team
+ * @copyright  Copyright (c) 2018-2024 Mavenbird Technologies Private Limited ( http://mavenbird.com )
+ * @license    http://mavenbird.com/Mavenbird-Module-License.txt
+ */
+ @font-face {
+    font-family: "Fontawesome";
+    src: url("../fonts/fontawesome-webfont.eot?#iefix&v=@{fa-version}") format("embedded-opentype"),
+    url("../fonts/fontawesome-webfont.woff2?v=@{fa-version}") format("woff2"),
+    url("../fonts/fontawesome-webfont.woff?v=@{fa-version}") format("woff"),
+    url("../fonts/fontawesome-webfont.ttf?v=@{fa-version}") format("truetype"),
+    url("../fonts/fontawesome-webfont.svg?v=@{fa-version}#fontawesomeregular") format("svg");
+    font-weight: 300;
+    font-style: normal;
+}

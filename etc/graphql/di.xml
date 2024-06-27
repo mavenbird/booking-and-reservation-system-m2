@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mavenbird Technologies Private Limited
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://mavenbird.com/Mavenbird-Module-License.txt
+ *
+ * =================================================================
+ *
+ * @category   Mavenbird
+ * @package    Mavenbird_OrderInformation
+ * @author     Mavenbird Team
+ * @copyright  Copyright (c) 2018-2024 Mavenbird Technologies Private Limited ( http://mavenbird.com )
+ * @license    http://mavenbird.com/Mavenbird-Module-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\CatalogGraphQl\Model\ProductInterfaceTypeResolverComposite">
+        <arguments>
+            <argument name="productTypeNameResolvers" xsi:type="array">
+                <item name="booking_product_type_resolver" xsi:type="object">Mavenbird\BookingSystem\Model\BookingProductTypeResolver</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\GraphQl\Schema\Type\Entity\DefaultMapper">
+        <arguments>
+            <argument name="map" xsi:type="array">
+                <item name="catalog_product" xsi:type="array">
+                    <item name="booking" xsi:type="string">BookingProduct</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\QuoteGraphQl\Model\Cart\BuyRequest\BuyRequestBuilder">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="slot_id" xsi:type="object">Mavenbird\BookingSystem\Model\Cart\BuyRequest\SlotInfo</item>
+                <item name="product" xsi:type="object">Mavenbird\BookingSystem\Model\Cart\BuyRequest\ProductInfo</item>
+                <item name="parent_id" xsi:type="object">Mavenbird\BookingSystem\Model\Cart\BuyRequest\ParentIdInfo</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

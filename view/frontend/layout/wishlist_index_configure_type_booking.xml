@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mavenbird Technologies Private Limited
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://mavenbird.com/Mavenbird-Module-License.txt
+ *
+ * =================================================================
+ *
+ * @category   Mavenbird
+ * @package    Mavenbird_OrderInformation
+ * @author     Mavenbird Team
+ * @copyright  Copyright (c) 2018-2024 Mavenbird Technologies Private Limited ( http://mavenbird.com )
+ * @license    http://mavenbird.com/Mavenbird-Module-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance dc" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Mavenbird_BookingSystem::css/style.css"/>
+        <css src="Mavenbird_BookingSystem::css/styles-fontawesome.css"/>
+    </head>
+    <referenceBlock name="product.info.options.wrapper">
+        <action method="setTemplate">
+            <argument name="template" xsi:type="string">Mavenbird_BookingSystem::catalog/product/view/options/wrapper.phtml</argument>
+        </action>
+        <arguments>
+            <argument name="bookingHelper" xsi:type="object">Mavenbird\BookingSystem\Helper\Data</argument>
+        </arguments>
+    </referenceBlock>
+    <referenceBlock name="product.info.addtocart.additional">
+        <action method="setTemplate">
+            <argument name="template" xsi:type="string">Mavenbird_BookingSystem::catalog/product/view/addtocart.phtml</argument>
+        </action>
+        <arguments>
+            <argument name="bookingHelper" xsi:type="object">Mavenbird\BookingSystem\Helper\Data</argument>
+        </arguments>
+    </referenceBlock>
+</page>

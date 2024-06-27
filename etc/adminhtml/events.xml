@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mavenbird Technologies Private Limited
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://mavenbird.com/Mavenbird-Module-License.txt
+ *
+ * =================================================================
+ *
+ * @category   Mavenbird
+ * @package    Mavenbird_OrderInformation
+ * @author     Mavenbird Team
+ * @copyright  Copyright (c) 2018-2024 Mavenbird Technologies Private Limited ( http://mavenbird.com )
+ * @license    http://mavenbird.com/Mavenbird-Module-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_catalog_product_save_entity_after">
+        <observer name="AfterProductSave" instance="Mavenbird\BookingSystem\Observer\AfterProductSave" />
+    </event>
+    <event name="catalog_product_edit_action">
+        <observer name="BeforeViewProduct" instance="Mavenbird\BookingSystem\Observer\BeforeViewProduct" />
+    </event>
+    <event name="order_cancel_after">
+        <observer name="AfterCancelOrder" instance="Mavenbird\BookingSystem\Observer\AfterCancelOrder" />
+    </event>
+    <event name="sales_order_creditmemo_save_after">
+        <observer name="AfterRefundOrder" instance="Mavenbird\BookingSystem\Observer\AfterRefundOrder" />
+    </event>
+    <event name="sales_order_invoice_save_after">
+        <observer name="AfterInvoiceSave" instance="Mavenbird\BookingSystem\Observer\AfterInvoiceSave" />
+    </event>
+</config>

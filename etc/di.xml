@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mavenbird Technologies Private Limited
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://mavenbird.com/Mavenbird-Module-License.txt
+ *
+ * =================================================================
+ *
+ * @category   Mavenbird
+ * @package    Mavenbird_OrderInformation
+ * @author     Mavenbird Team
+ * @copyright  Copyright (c) 2018-2024 Mavenbird Technologies Private Limited ( http://mavenbird.com )
+ * @license    http://mavenbird.com/Mavenbird-Module-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="Mavenbird_BookingSystem::afterGetIsVirtual" type="Mavenbird\BookingSystem\Plugin\Model\Catalog\Product" sortOrder="1" />
+    </type>
+    <type name="Magento\CatalogInventory\Model\Stock\Item">
+        <plugin name="Mavenbird_BookingSystem::afterGetQty" type="Mavenbird\BookingSystem\Plugin\Model\CatalogInventory\Stock\Item" sortOrder="1" />
+    </type>
+    <type name="Magento\Catalog\Model\Indexer\Product\Price\Action\Row">
+        <plugin name="IndexPriceRow" type="Mavenbird\BookingSystem\Plugin\Model\Indexer\Product\Price\Action\Row" sortOrder="1" />
+    </type>
+    <type name="Magento\Checkout\Controller\Cart\Configure">
+        <plugin name="Mavenbird_BookingSystem::afterConfigure" type="Mavenbird\BookingSystem\Plugin\Controller\Checkout\Cart\Configure" sortOrder="1" />
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="bookingsystem_bookings_list_data_source" xsi:type="string">Mavenbird\BookingSystem\Model\ResourceModel\Booked\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Mavenbird\BookingSystem\Model\ResourceModel\Booked\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">wk_bs_booking_booked</argument>
+            <argument name="eventPrefix" xsi:type="string">bookingsystem_bookings_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">bookings_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Mavenbird\BookingSystem\Model\ResourceModel\Booked</argument>
+        </arguments>
+    </type>
+    <virtualType name="BookingsystemGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="BookingsGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Mavenbird\BookingSystem\Model\ResourceModel\Booked\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">BookingsystemGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Mavenbird\BookingSystem\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Mavenbird\BookingSystem\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">bookingSystem</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Mavenbird\BookingSystem\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Helper\Product\Configuration">
+        <plugin name="Mavenbird_BookingSystem::configuration" type="Mavenbird\BookingSystem\Plugin\Catalog\Helper\Product\Configuration" sortOrder="1" />
+    </type>
+    <type name="Magento\InventorySalesApi\Api\IsProductSalableForRequestedQtyInterface">
+        <plugin name="Mavenbird_BookingSystem::beforeExecute" type="Mavenbird\BookingSystem\Plugin\Model\CheckIsProductSalableForRequestedQty" sortOrder="1" />
+    </type>
+    <type name="Magento\InventorySales\Model\IsProductSalableForRequestedQtyCondition\IsSalableWithReservationsCondition">
+        <plugin name="Mavenbird_BookingSystem::IsSalableWithReservationsConditionBeforeExecute" type="Mavenbird\BookingSystem\Plugin\Model\IsSalableWithReservationsCondition" sortOrder="1" />
+    </type>
+    <type name="Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer">
+        <plugin name="Mavenbird_BookingSystem::defaultRenderer" type="Mavenbird\BookingSystem\Plugin\Block\Order\Item\Renderer\DefaultRenderer" sortOrder="1" />
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn">
+        <plugin name="Mavenbird_BookingSystem::defaultColumn" type="Mavenbird\BookingSystem\Plugin\Block\Adminhtml\Items\Column\DefaultColumn" sortOrder="1" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\View">
+        <plugin name="Mavenbird_BookingSystem::unavailableText" type="Mavenbird\BookingSystem\Plugin\Catalog\Helper\Product\View"/>
+    </type>
+    <type name="Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="Mavenbird_BookingSystem::bookingproduct" type="Mavenbird\BookingSystem\Plugin\Product\ListBookingProduct"/>
+    </type>
+    <type name="Magento\QuoteGraphQl\Model\Resolver\CartItemTypeResolver">
+        <arguments>
+            <argument name="supportedTypes" xsi:type="array">
+                <item name="booking" xsi:type="string">VirtualCartItem</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="Mavenbird\BookingSystem\Api\Data\BookedInterface" type="Mavenbird\BookingSystem\Model\Booked"/>
+    <preference for="Mavenbird\BookingSystem\Api\Data\InfoInterface" type="Mavenbird\BookingSystem\Model\Info"/>
+    <preference for="Mavenbird\BookingSystem\Api\Data\OptionMapInterface" type="Mavenbird\BookingSystem\Model\OptionMap"/>
+    <preference for="Mavenbird\BookingSystem\Api\Data\ProductInterface" type="Mavenbird\BookingSystem\Model\Product"/>
+    <preference for="Mavenbird\BookingSystem\Api\Data\QuoteInterface" type="Mavenbird\BookingSystem\Model\Quote"/>
+    <preference for="Mavenbird\BookingSystem\Api\Data\SlotInterface" type="Mavenbird\BookingSystem\Model\Slot"/>
+
+    <preference for="Mavenbird\BookingSystem\Api\BookedRepositoryInterface" type="Mavenbird\BookingSystem\Model\BookedRepository"/>
+    <preference for="Mavenbird\BookingSystem\Api\InfoRepositoryInterface" type="Mavenbird\BookingSystem\Model\InfoRepository"/>
+    <preference for="Mavenbird\BookingSystem\Api\OptionMapRepositoryInterface" type="Mavenbird\BookingSystem\Model\OptionMapRepository"/>
+    <preference for="Mavenbird\BookingSystem\Api\SlotRepositoryInterface" type="Mavenbird\BookingSystem\Model\SlotRepository"/>
+    <preference for="Mavenbird\BookingSystem\Api\QuoteRepositoryInterface" type="Mavenbird\BookingSystem\Model\QuoteRepository"/>
+
+</config>

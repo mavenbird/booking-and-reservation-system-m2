@@ -1,0 +1,88 @@
+#Booking System GraphQl
+type Query {
+    productSlotData(
+        pid: Int! @doc(description: "Product Entity Id")
+        date: String! @doc(description:"Set Date 'YYYY-MM-DD' for slot")
+    ): ProductSlotDataOutput @resolver(class: "Mavenbird\\BookingSystem\\Model\\Resolver\\Slots") @doc(description: "Its provide current Product Slot Data.")
+
+    getCalendarData(
+        pid: Int! @doc(description: "Product Entity Id")
+    ):GetCalendarDataOutput @resolver (class: "Mavenbird\\BookingSystem\\Model\\Resolver\\GetCalendarInfo") @doc(description: "Its provide Booking Product Calendar Data.")
+}
+type GetCalendarDataOutput @doc(description:" Get Booking Product slot availability") {
+    availability: [Availability] @doc(description:"Booking Product Date wise availability")
+}
+type Availability @doc(description: "Booking Product Date wise availability") {
+    date: String @doc(description: "Calendar date")
+    status: String @doc(description: "Date availability")
+}
+type BookingProduct implements ProductInterface, RoutableInterface, PhysicalProductInterface, CustomizableProductInterface @doc(description: "Defines a simple product, which is tangible and is usually sold in single units or in fixed quantities.")
+{
+   slot_info: ProductSlotData @resolver(class: "Mavenbird\\BookingSystem\\Model\\Resolver\\ProductSlotsInfo") @doc(description: "Its provide current Product Slot Data.")
+}
+type ProductSlotData @doc(description: "Conatins product slots with additional information") {
+    slots: [Slot] @doc(description: "An array of possible sort fields.")
+    parentId: Int @doc(description: "Showing Parent Id slot.")
+    productId: Int @doc(description: "Booking Product Id.")
+    options: [Options] @doc(description: "Booking Product required Options")
+    prevent_booking_before: Int @doc(description: "get prevent booking book days")
+}
+
+type Options @doc(description: "booking product required options") {
+    id: Int @doc(description: "Option id")
+    title: String @doc(description: "Option title")
+}
+type SlotData @doc(description: "Contains a product slot data.") {
+    avl: String @doc(description: "The default sort field value.")
+    msg: String @doc(description: "The default sort field value.")
+    slots: [Slot] @doc(description: "An array of possible sort fields.")
+}
+type ProductSlotDataOutput @doc(description: "Contains a product slot data.") {
+    avl: String @doc(description: "The default sort field value.")
+    msg: String @doc(description: "The default sort field value.")
+    slots: [Slot] @doc(description: "An array of possible sort fields.")
+    parent_id: Int @doc(description: "Showing Parent Id slot.")
+}
+type Slot @doc(description: "Defines a possible sort field.") {
+    id: String @doc(description: "Will get Slot id .")
+    slot: String @doc(description: "This field get the slot.")
+    qty: String @doc(description: "This field get the qty of slot.")
+    day: String @doc(description: "This field show day of the slot 'Monday,Tuesday,....'.")
+    month: String @doc(description: "This field show Month of the slot 'January,....'.")
+    year: String @doc(description: "This field show Year of the slot '2001,2002,....'.")
+    day1: String @doc(description: "This field show day of the slot 'Mon,Tue,....'.")
+    date: String @doc(description: "This field show Month of the slot 'DD-MM-YYYY'")
+    date_formatted: String @doc(description: "This field show formated date of the slot '10,August 2023'.")
+    booking_from: String @doc(description: "This field show booking time of the slot")
+    booking_to: String @doc(description: "This field show booking time of the slot.")
+    no_of_days:String @doc(description: "This field show days of the slot.")
+}
+# Mutation for booking product add to cart 
+type Mutation {
+    addBookingProductsToCart(input: AddBookingProductsToCartInput @doc(description: "An input object that defines which booking products to add to the cart.")): AddBookingProductOutput @resolver(class: "Mavenbird\\BookingSystem\\Model\\Resolver\\AddBookingProduct") @doc(description:"Add one or more booking products to the specified cart. We recommend using `addProductsToCart` instead.")
+}
+input AddBookingProductsToCartInput @doc(description: "Defines the simple and group products to add to the cart.")
+{
+    parent_id: Int! @doc(description: "parent Id")
+    cart_id: String! @doc(description: "The unique ID of a `Cart` object.")
+    cart_items: [BookingProductCartItemInput!]! @doc(description: "An array of simple and group items to add.")
+}
+
+input BookingProductCartItemInput @doc(description: "Defines a single product to add to the cart.") {
+    data: BookingCartItemInput! @doc(description: "An object containing the `sku`, `quantity`, and other relevant information about the product.")
+    customizable_options:[CustomizableOptionInput!] @doc(description: "An array that defines customizable options for the product.")
+}
+input BookingCartItemInput @doc(description: "Defines an item to be added to the cart.") {
+    sku: String! @doc(description: "The SKU of the product.")
+    quantity: Float! @doc(description: "The amount or number of an item to add.")
+    parent_sku: String @doc(description: "For a child product, the SKU of its parent product.")
+    selected_options: [ID!] @doc(description: "The selected options for the base product, such as color or size, using the unique ID for an object such as `CustomizableRadioOption`, `CustomizableDropDownOption`, or `ConfigurableProductOptionsValues`.")
+    entered_options: [EnteredOptionInput!] @doc(description: "An array of entered options for the base product, such as personalization text.")
+    slot_id: Int! @doc(description: "Slot Id")
+}
+
+type AddBookingProductOutput @doc(description:"")
+{
+    cart: Cart! @doc(description: "The cart after adding products.")
+}
+

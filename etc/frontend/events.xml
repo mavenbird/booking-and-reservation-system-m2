@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mavenbird Technologies Private Limited
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://mavenbird.com/Mavenbird-Module-License.txt
+ *
+ * =================================================================
+ *
+ * @category   Mavenbird
+ * @package    Mavenbird_OrderInformation
+ * @author     Mavenbird Team
+ * @copyright  Copyright (c) 2018-2024 Mavenbird Technologies Private Limited ( http://mavenbird.com )
+ * @license    http://mavenbird.com/Mavenbird-Module-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_product_add_after">
+        <observer name="booking_customprice" instance="Mavenbird\BookingSystem\Observer\CartProductAddAfter" />
+    </event>
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="booking_afterplaceorder" instance="Mavenbird\BookingSystem\Observer\AfterPlaceOrder" />
+    </event>
+    <event name="checkout_cart_add_product_complete">
+        <observer name="booking_afteraddproducttocart" instance="Mavenbird\BookingSystem\Observer\CartProductAddComplete" />
+    </event>
+    <event name="controller_action_predispatch_checkout_cart_index">
+        <observer name="booking_beforeviewcart" instance="Mavenbird\BookingSystem\Observer\BeforeViewCart" />
+    </event>
+    <event name="controller_action_predispatch_checkout_index_index">
+        <observer name="booking_beforeviewcart" instance="Mavenbird\BookingSystem\Observer\BeforeViewCart" />
+    </event>
+    <event name="sales_quote_item_set_product">
+        <observer name="booking_sales_quote_item_set_product" instance="Mavenbird\BookingSystem\Observer\SalesQuoteItemProduct" />
+    </event>
+    <event name="checkout_cart_update_items_before">
+        <observer name="booking_beforeUpdatecartproduct" instance="Mavenbird\BookingSystem\Observer\BeforeUpdateCart" />
+    </event>
+</config>

@@ -1,0 +1,610 @@
+<?php
+/**
+ * Mavenbird Technologies Private Limited
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://mavenbird.com/Mavenbird-Module-License.txt
+ *
+ * =================================================================
+ *
+ * @category   Mavenbird
+ * @package    Mavenbird_OrderInformation
+ * @author     Mavenbird Team
+ * @copyright  Copyright (c) 2018-2024 Mavenbird Technologies Private Limited ( http://mavenbird.com )
+ * @license    http://mavenbird.com/Mavenbird-Module-License.txt
+ */
+?>
+<?php
+$helper = $block->getHelper();
+$days = [__('Sunday'), __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday')];
+$bookingTypes = [
+    __('Disable '),
+    __('Many booking in one day'),
+    __('One booking for many days')
+];
+$allStatus = [__('Close'), __('Open')];
+$bookingInfo = $helper->getBookingInfo($block->getProduct()->getId());
+if ($bookingInfo['is_booking']) {
+    $startDate = $bookingInfo['start_date'];
+    $endDate = $bookingInfo['end_date'];
+    $bookBefore = $bookingInfo['prevent_booking_before'];
+    $slotHasQuantity = $bookingInfo['slot_has_quantity'];
+} else {
+    $startDate = "";
+    $endDate = "";
+    $bookBefore = "";
+    $slotHasQuantity = "";
+}
+$startSelectHtml = $helper->getDaySelectHtml('info[start][day][]');
+$endSelectHtml = $helper->getDaySelectHtml('info[end][day][]');
+$status = "";
+if ($bookingInfo['is_booking']) {
+    $status = "disabled";
+    $info = $bookingInfo['info'];
+}
+$selectCounts = 0;
+?>
+<div class="wk-primary-container">
+    <div class="wk-container">
+        <div class="wk-row wk-primary-row wk-text-center">
+            <select class="admin__control-select" data-form-part="product_form" id="booking_type" name="booking_type">
+                <?php foreach ($bookingTypes as $key => $bookingType): ?>
+                    <?php if ($key == $bookingInfo['type']): ?>
+                        <option value="<?= $escaper->escapeHtml($key);?>" selected="selected">
+                            <?= $escaper->escapeHtml($bookingType);?></option>
+                    <?php else: ?>
+                        <option value="<?= $escaper->escapeHtml($key);?>">
+                            <?= $escaper->escapeHtml($bookingType);?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="wk-border"></div>
+    </div>
+</div>
+<div class="wk-secondary-container">
+    <div class="wk-container">
+        <div class="wk-row wk-primary-row">
+            <div class="wk-col-3 wk-text-center">
+                <div class="wk-row-content">
+                    <div class="wk-row-label"><?= $escaper->escapeHtml(__("Start Date of Booking")); ?></div>
+                    <input data-form-part="product_form"
+                        class="wk-bs required-entry admin__control-text"
+                        type="text"
+                        id="start_date"
+                        name="start_date"
+                        placeholder="Select Date..."
+                        value="<?= $escaper->escapeHtml($startDate); ?>"
+                        data-validate='{"validate-date":{"dateFormat":"yy-mm-dd"}}'>
+                </div>
+            </div>
+            <div class="wk-col-3 wk-text-center">
+                <div class="wk-row-content">
+                    <div class="wk-row-label"><?= $escaper->escapeHtml(__("End Date of Booking")); ?></div>
+                    <input data-form-part="product_form"
+                        class="wk-bs required-entry admin__control-text"
+                        type="text"
+                        id="end_date"
+                        name="end_date"
+                        placeholder="Select Date..."
+                        value="<?= $escaper->escapeHtml($endDate); ?>"
+                        data-validate='{"validate-date":{"dateFormat":"yy-mm-dd"}}'>
+                </div>
+            </div>
+            <div class="wk-col-3 wk-text-center">
+                <div class="wk-row-content">
+                    <div class="wk-row-label"><?= $escaper->escapeHtml(__("Prevent Booking Before (Days)")); ?></div>
+                    <input data-form-part="product_form"
+                        class="wk-bs required-entry admin__control-text"
+                        type="text"
+                        id="prevent_booking_before"
+                        name="prevent_booking_before"
+                        placeholder="No. Of Days"
+                        min="0"
+                        value="<?= $escaper->escapeHtml($bookBefore??0); ?>"
+                        data-validate='{"validate-digits":true}'>
+                </div>
+            </div>
+            <div class="wk-col-3 wk-text-center" id="wk-slot-has-quantity-row">
+                <div class="admin__actions-switch wk-row-content" data-role="switcher">
+                <div class="wk-row-label"><?= $escaper->escapeHtml(__("Slot has Quantity")); ?></div>
+                    <select class="wk-bs admin__actions admin__control-text required-entry"
+                        data-form-part="product_form" id="wk-slot-has-quantity"
+                        name="slot_has_quantity"
+                        value="<?= $escaper->escapeHtml($slotHasQuantity) ?>">
+                            <option value = "0" <?= $slotHasQuantity==0?'selected':'' ?>>
+                                <?= $escaper->escapeHtml(__("No")); ?>
+                            </option>
+                            <option value = "1" <?= $slotHasQuantity==1?'selected':''?>>
+                                <?= $escaper->escapeHtml(__("Yes")); ?>
+                            </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="wk-border"></div>
+    </div>
+</div>
+<?php if ($bookingInfo['is_booking']):?>
+    <?php if ($bookingInfo['type'] == 1):?>
+        <div class="wk-secondary-container wk-one-booking-container">
+            <div class="wk-container">
+                <div class="wk-row wk-primary-row wk-text-center">
+                    <button class="wk-btn" type="button"><?= $escaper->escapeHtml(__("Add Bookings")); ?></button>
+                </div>
+                <div class="wk-border"></div>
+                <div class="wk-one-booking-panel">
+                </div>
+            </div>
+        </div>
+        <div class="wk-secondary-container wk-many-booking-container wk-display-none">
+            <div class="wk-container">
+                <div class="wk-col-2 wk-text-center">
+                    <div class="wk-row-content">
+                        <div class="wk-row-label"><?= $escaper->escapeHtml(__("Time Slot (In Minutes)")); ?></div>
+                        <input id="time_slot"
+                            data-form-part="product_form"
+                            class="wk-bs wk-is required-entry validate-number admin__control-text"
+                            type="text" name="time_slot"
+                            value="<?= $escaper->escapeHtml($bookingInfo['info']['time_slot']); ?>">
+                    </div>
+                </div>
+                <div class="wk-col-2 wk-text-center">
+                    <div class="wk-row-content">
+                        <div class="wk-row-label"><?= $escaper->escapeHtml(__("Break Between Bookings")); ?></div>
+                        <input id="break_time"
+                            data-form-part="product_form"
+                            class="wk-bs wk-is required-entry validate-number admin__control-text"
+                            type="text" name="break_time"
+                            value="<?= $escaper->escapeHtml($bookingInfo['info']['break_time']); ?>">
+                    </div>
+                </div>
+                
+                <div class="wk-row wk-primary-row wk-text-center">
+                    <div class="wk-many-booing-table">
+                        <div class="wk-head">
+                            <div class="wk-col wk-day"><?= $escaper->escapeHtml(__("Day ")); ?></div>
+                            <div class="wk-col wk-time"><?= $escaper->escapeHtml(__("Start Time")); ?></div>
+                            <div class="wk-col wk-time"><?= $escaper->escapeHtml(__("End Time")); ?></div>
+                            <div class="wk-col wk-status"><?= $escaper->escapeHtml(__("Status ")); ?></div>
+                            <div class="wk-col wk-slot-qty"><?= $escaper->escapeHtml(__("Slot Quantity")); ?></div>
+                        </div>
+                        <div class="wk-body">
+                        <?php foreach ($days as $key => $day): ?>
+                            <?php
+                            $count = $key++;
+                            if ($key%2 == 0) {
+                                $class = "wk-even";
+                            } else {
+                                $class = "wk-odd";
+                            }
+                            $index = strtolower($day);
+                            ?>
+                                <div class="wk-row <?= $escaper->escapeHtml($class); ?>">
+                                    <div class="wk-col wk-day">
+                                        <span class="wk-label"><?= $escaper->escapeHtml(__($day)); ?></span></div>
+                                    <div class="wk-col wk-time">
+                                        <div class="wk-input-col">
+                                        <?php $startHour = $bookingInfo['info'][$index]['start_hour']; ?>
+                                            <input data-form-part="product_form"
+                                                type="number"
+                                                class="wk-mbod-time admin__control-text"
+                                                min="0" max="24"
+                                                name="info[<?= $escaper->escapeHtml($index); ?>][start_hour]"
+                                                value="<?= $escaper->escapeHtml($startHour); ?>">
+                                            <div class="wk-dec wk-obmd-h-dec">-</div>
+                                            <div class="wk-inc wk-obmd-h-inc">+</div>
+                                        </div>
+                                        <div class="wk-input-col">
+                                        <?php $startMinute = $bookingInfo['info'][$index]['start_minute']; ?>
+                                            <input data-form-part="product_form"
+                                                type="number"
+                                                class="wk-mbod-time admin__control-text"
+                                                min="0" max="59"
+                                                name="info[<?= $escaper->escapeHtml($index); ?>][start_minute]"
+                                                value="<?= $escaper->escapeHtml($startMinute); ?>">
+                                            <div class="wk-dec wk-obmd-m-dec">-</div>
+                                            <div class="wk-inc wk-obmd-m-inc">+</div>
+                                        </div>
+                                    </div>
+                                    <div class="wk-col wk-time">
+                                    <?php $endHour = $bookingInfo['info'][$index]['end_hour']; ?>
+                                        <div class="wk-input-col">
+                                            <input data-form-part="product_form"
+                                                type="number"
+                                                class="wk-mbod-time admin__control-text"
+                                                min="0" max="24"
+                                                name="info[<?= $escaper->escapeHtml($index); ?>][end_hour]"
+                                                value="<?= $escaper->escapeHtml($endHour); ?>">
+                                            <div class="wk-dec wk-obmd-h-dec">-</div>
+                                            <div class="wk-inc wk-obmd-h-inc">+</div>
+                                        </div>
+                                        <div class="wk-input-col">
+                                        <?php $endMinute = $bookingInfo['info'][$index]['end_minute']; ?>
+                                            <input data-form-part="product_form"
+                                                type="number"
+                                                class="wk-mbod-time admin__control-text"
+                                                min="0" max="59"
+                                                name="info[<?= $escaper->escapeHtml($index); ?>][end_minute]"
+                                                value="<?= $escaper->escapeHtml($endMinute); ?>">
+                                            <div class="wk-dec wk-obmd-m-dec">-</div>
+                                            <div class="wk-inc wk-obmd-m-inc">+</div>
+                                        </div>
+                                    </div>
+                                    <div class="wk-col wk-status">
+                                        <select class="admin__control-select"
+                                            data-form-part="product_form"
+                                            name="info[<?= $escaper->escapeHtml($index); ?>][status]">
+                                            <?php foreach ($allStatus as $key => $status): ?>
+                                                <?php if ($key == $bookingInfo['info'][$index]['status']): ?>
+                                                    <option selected value="<?= $escaper->escapeHtml($key); ?>">
+                                                        <?= $escaper->escapeHtml($status); ?></option>
+                                                <?php else: ?>
+                                                    <option value="<?= $escaper->escapeHtml($key); ?>">
+                                                        <?= $escaper->escapeHtml($status); ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="wk-col wk-slot-qty">
+                                        <?php $slot_qty = $bookingInfo['info'][$index]['slot_qty']??"0"; ?>
+                                            <input data-form-part="product_form"
+                                                type="number"
+                                                class="wk-slot-input admin__control-text"
+                                                min="0"
+                                                name="info[<?= $escaper->escapeHtml($index); ?>][slot_qty]"
+                                                value="<?= $escaper->escapeHtml($slot_qty)??"0"; ?>">
+                                        </div>
+                                </div>
+                        <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php elseif ($bookingInfo['type'] == 2):
+        ?>
+        <div class="wk-secondary-container wk-one-booking-container">
+            <div class="wk-container">
+                <div class="wk-row wk-primary-row wk-text-center">
+                    <button class="wk-btn" type="button"><?= $escaper->escapeHtml(__("Add Bookings")); ?></button>
+                </div>
+                <div class="wk-border"></div>
+                <div class="wk-one-booking-panel">
+                    <?php foreach ($info['start']['day'] as $key => $day): ?>
+                        <?php $selectCounts = $key; ?>
+                        <div class="wk-row wk-primary-row wk-text-center">
+                            <div class="wk-one-booking-col">
+                                <div class="wk-col-wrapper">
+                                    <div class="wk-input-col">
+                                        <?= /** @noEscape */ $helper->getDaySelectHtml(
+                                            "info[start][day][$key]",
+                                            $day
+                                        ) ?>
+                                    </div>
+                                    <div class="wk-input-col">
+                                        <input class="wk-mbod-time admin__control-text"
+                                            data-form-part="product_form"
+                                              type="number"
+                                              min="0" max="24"
+                                            name="info[start][hour][<?= $escaper->escapeHtml($key);?>]"
+                                            value="<?= $escaper->escapeHtml($info['start']['hour'][$key]); ?>">
+                                        <div class="wk-dec wk-obmd-h-dec">-</div>
+                                        <div class="wk-inc wk-obmd-h-inc">+</div>
+                                    </div>
+                                    <div class="wk-input-col">
+                                        <input class="wk-mbod-time admin__control-text"
+                                            data-form-part="product_form"
+                                              type="number"
+                                              min="0" max="59"
+                                            name="info[start][minute][<?= $escaper->escapeHtml($key);?>]"
+                                            value="<?= $escaper->escapeHtml($info['start']['minute'][$key]); ?>">
+                                        <div class="wk-dec wk-obmd-m-dec">-</div>
+                                        <div class="wk-inc wk-obmd-m-inc">+</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wk-one-booking-remove-col wk-text-center">
+                                <div class="wk-remove">x</div>
+                            </div>
+                            <div class="wk-one-booking-col">
+                                <div class="wk-col-wrapper">
+                                    <div class="wk-input-col">
+                                        <?= /** @noEscape */ $helper->getDaySelectHtml(
+                                            "info[end][day][$selectCounts]",
+                                            $info['end']['day'][$key]
+                                        ); ?>
+                                    </div>
+                                    <div class="wk-input-col">
+                                        <input class="wk-mbod-time admin__control-text"
+                                            data-form-part="product_form"
+                                              type="number"
+                                              min="0" max="24"
+                                            name="info[end][hour][<?= $escaper->escapeHtml($key);?>]"
+                                            value="<?= $escaper->escapeHtml($info['end']['hour'][$key]); ?>">
+                                        <div class="wk-dec wk-obmd-h-dec">-</div>
+                                        <div class="wk-inc wk-obmd-h-inc">+</div>
+                                    </div>
+                                    <div class="wk-input-col">
+                                        <input class="wk-mbod-time admin__control-text"
+                                            data-form-part="product_form"
+                                              type="number"
+                                              min="0" max="59"
+                                            name="info[end][minute][<?= $escaper->escapeHtml($key);?>]"
+                                            value="<?= $escaper->escapeHtml($info['end']['minute'][$key]); ?>">
+                                        <div class="wk-dec wk-obmd-m-dec">-</div>
+                                        <div class="wk-inc wk-obmd-m-inc">+</div>
+                                    </div>
+                                    <div class="wk-input-col">
+                                        <input class="wk-slot-qty admin__control-text"
+                                            data-form-part="product_form"
+                                              type="number"
+                                              min="0"
+                                            name="info[slot_qty][<?= $escaper->escapeHtml($key);?>]"
+                                            value="<?= $escaper->escapeHtml($info['slotQty'][$key]??0); ?>">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <div class="wk-secondary-container wk-many-booking-container wk-display-none">
+            <div class="wk-container">
+                <div class="wk-col-2 wk-text-center">
+                    <div class="wk-row-content">
+                        <div class="wk-row-label"><?= $escaper->escapeHtml(__("Time Slot (In Minutes)")); ?></div>
+                        <input id="time_slot"
+                            class="wk-bs wk-is admin__control-text required-entry"
+                            data-form-part="product_form"
+                            type="text"
+                            name="time_slot">
+                    </div>
+                </div>
+                <div class="wk-col-2 wk-text-center">
+                    <div class="wk-row-content">
+                        <div class="wk-row-label"><?= $escaper->escapeHtml(__("Break Between Bookings")); ?></div>
+                        <input id="break_time"
+                            class="wk-bs wk-is admin__control-text required-entry"
+                            data-form-part="product_form"
+                            type="text"
+                            name="break_time">
+                    </div>
+                </div>
+                <div class="wk-row wk-primary-row wk-text-center">
+                    <div class="wk-many-booing-table">
+                        <div class="wk-head">
+                            <div class="wk-col wk-day"><?= $escaper->escapeHtml(__("Day ")); ?></div>
+                            <div class="wk-col wk-time"><?= $escaper->escapeHtml(__("Start Time")); ?></div>
+                            <div class="wk-col wk-time"><?= $escaper->escapeHtml(__("End Time")); ?></div>
+                            <div class="wk-col wk-status"><?= $escaper->escapeHtml(__("Status ")); ?></div>
+                            <div class="wk-col wk-slot-qty"><?= $escaper->escapeHtml(__("Slot Quantity")); ?></div>
+                        </div>
+                        <div class="wk-body">
+                            <?php foreach ($days as $key => $day): ?>
+                                <?php
+                                $count = $key++;
+                                if ($key%2 == 0) {
+                                    $class = "wk-even";
+                                } else {
+                                    $class = "wk-odd";
+                                }
+                                $index = strtolower($day);
+                                ?>
+                                <div class="wk-row <?= $escaper->escapeHtml($class); ?>">
+                                    <div class="wk-col wk-day">
+                                        <span class="wk-label"><?= $escaper->escapeHtml(__($day)) ?></span></div>
+                                    <div class="wk-col wk-time">
+                                        <div class="wk-input-col">
+                                            <input data-form-part="product_form"
+                                                type="number"
+                                                class="wk-mbod-time admin__control-text"
+                                                min="0" max="24"
+                                                name="info[<?= $escaper->escapeHtml($index); ?>][start_hour]"
+                                                value="1" >
+                                            <div class="wk-dec wk-obmd-h-dec">-</div>
+                                            <div class="wk-inc wk-obmd-h-inc">+</div>
+                                        </div>
+                                        <div class="wk-input-col">
+                                            <input data-form-part="product_form"
+                                                type="number"
+                                                class="wk-mbod-time admin__control-text"
+                                                min="0" max="59"
+                                                name="info[<?= $escaper->escapeHtml($index); ?>][start_minute]"
+                                                value="0">
+                                            <div class="wk-dec wk-obmd-m-dec">-</div>
+                                            <div class="wk-inc wk-obmd-m-inc">+</div>
+                                        </div>
+                                    </div>
+                                    <div class="wk-col wk-time">
+                                        <div class="wk-input-col">
+                                            <input data-form-part="product_form"
+                                                type="number"
+                                                class="wk-mbod-time admin__control-text"
+                                                min="0" max="24"
+                                                name="info[<?= $escaper->escapeHtml($index); ?>][end_hour]"
+                                                value="1">
+                                            <div class="wk-dec wk-obmd-h-dec">-</div>
+                                            <div class="wk-inc wk-obmd-h-inc">+</div>
+                                        </div>
+                                        <div class="wk-input-col">
+                                            <input data-form-part="product_form"
+                                                type="number"
+                                                class="wk-mbod-time admin__control-text"
+                                                min="0" max="59"
+                                                name="info[<?= $escaper->escapeHtml($index); ?>][end_minute]"
+                                                value="0">
+                                            <div class="wk-dec wk-obmd-m-dec">-</div>
+                                            <div class="wk-inc wk-obmd-m-inc">+</div>
+                                        </div>
+                                    </div>
+                                    <div class="wk-col wk-status">
+                                        <select class="admin__control-select"
+                                            data-form-part="product_form"
+                                            name="info[<?= $escaper->escapeHtml($index); ?>][status]">
+                                            <option value="1"><?= $escaper->escapeHtml(__("Open")); ?></option>
+                                            <option value="2"><?= $escaper->escapeHtml(__("Close")); ?></option>
+                                        </select>
+                                    </div>
+                                    <div class="wk-col wk-slot-qty">
+                                        <input data-form-part="product_form"
+                                        type="number"
+                                        class="wk-slot-input admin__control-text"
+                                        name="info[<?= $escaper->escapeHtml($index); ?>][slot_qty]"
+                                        value="0">
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div class="wk-secondary-container wk-one-booking-container">
+        <div class="wk-container">
+            <div class="wk-row wk-primary-row wk-text-center">
+                <button class="wk-btn" type="button"><?= $escaper->escapeHtml(__("Add Bookings")); ?></button>
+            </div>
+            <div class="wk-border"></div>
+            <div class="wk-one-booking-panel">
+            </div>
+        </div>
+    </div>
+    <div class="wk-secondary-container wk-many-booking-container wk-display-none">
+        <div class="wk-container">
+            <div class="wk-col-2 wk-text-center">
+                <div class="wk-row-content">
+                    <div class="wk-row-label"><?= $escaper->escapeHtml(__("Time Slot (In Minutes)")); ?></div>
+                    <input id="time_slot"
+                        class="wk-bs wk-is admin__control-text required-entry validate-number"
+                        data-form-part="product_form"
+                        type="text"
+                        name="time_slot">
+                </div>
+            </div>
+            <div class="wk-col-2 wk-text-center">
+                <div class="wk-row-content">
+                    <div class="wk-row-label"><?= $escaper->escapeHtml(__("Break Between Bookings")); ?></div>
+                    <input id="break_time"
+                        class="wk-bs wk-is admin__control-text required-entry validate-number"
+                        data-form-part="product_form"
+                        type="text"
+                        name="break_time">
+                </div>
+            </div>
+            <div class="wk-row wk-primary-row wk-text-center">
+                <div class="wk-many-booing-table">
+                    <div class="wk-head">
+                        <div class="wk-col wk-day"><?= $escaper->escapeHtml(__("Day ")); ?></div>
+                        <div class="wk-col wk-time"><?= $escaper->escapeHtml(__("Start Time")); ?></div>
+                        <div class="wk-col wk-time"><?= $escaper->escapeHtml(__("End Time")); ?></div>
+                        <div class="wk-col wk-status"><?= $escaper->escapeHtml(__("Status ")); ?></div>
+                        <div class="wk-col wk-slot-qty"><?= $escaper->escapeHtml(__("Slot Quantity")); ?></div>
+                    </div>
+                    <div class="wk-body">
+                        <?php foreach ($days as $key => $day): ?>
+                            <?php
+                            $count = $key++;
+                            if ($key%2 == 0) {
+                                $class = "wk-even";
+                            } else {
+                                $class = "wk-odd";
+                            }
+                            $index = strtolower($day);
+                            ?>
+                            <div class="wk-row <?= $escaper->escapeHtml($class); ?>">
+                                <div class="wk-col wk-day">
+                                    <span class="wk-label"><?= $escaper->escapeHtml($day); ?></span>
+                                </div>
+                                <div class="wk-col wk-time">
+                                    <div class="wk-input-col">
+                                        <input data-form-part="product_form"
+                                            type="number"
+                                            class="wk-mbod-time admin__control-text"
+                                            min="0" max="24"
+                                            name="info[<?= $escaper->escapeHtml($index); ?>][start_hour]"
+                                            value="1" >
+                                        <div class="wk-dec wk-obmd-h-dec">-</div>
+                                        <div class="wk-inc wk-obmd-h-inc">+</div>
+                                    </div>
+                                    <div class="wk-input-col">
+                                        <input data-form-part="product_form"
+                                            type="number"
+                                            class="wk-mbod-time admin__control-text"
+                                            min="0" max="59"
+                                            name="info[<?= $escaper->escapeHtml($index); ?>][start_minute]"
+                                            value="0">
+                                        <div class="wk-dec wk-obmd-m-dec">-</div>
+                                        <div class="wk-inc wk-obmd-m-inc">+</div>
+                                    </div>
+                                </div>
+                                <div class="wk-col wk-time">
+                                    <div class="wk-input-col">
+                                        <input data-form-part="product_form"
+                                            type="number"
+                                            class="wk-mbod-time admin__control-text"
+                                            min="0" max="24"
+                                            name="info[<?= $escaper->escapeHtml($index); ?>][end_hour]"
+                                            value="1">
+                                        <div class="wk-dec wk-obmd-h-dec">-</div>
+                                        <div class="wk-inc wk-obmd-h-inc">+</div>
+                                    </div>
+                                    <div class="wk-input-col">
+                                        <input data-form-part="product_form"
+                                            type="number"
+                                            class="wk-mbod-time admin__control-text"
+                                            min="0" max="59"
+                                            name="info[<?= $escaper->escapeHtml($index); ?>][end_minute]"
+                                            value="0">
+                                        <div class="wk-dec wk-obmd-m-dec">-</div>
+                                        <div class="wk-inc wk-obmd-m-inc">+</div>
+                                    </div>
+                                </div>
+                                <div class="wk-col wk-status">
+                                    <select class="admin__control-select"
+                                        data-form-part="product_form"
+                                        name="info[<?= $escaper->escapeHtml($index); ?>][status]">
+                                        <option value="1"><?= $escaper->escapeHtml(__("Open")); ?></option>
+                                        <option value="2"><?= $escaper->escapeHtml(__("Close")); ?></option>
+                                    </select>
+                                </div>
+                                <div class="wk-slot-qty wk-col">
+                                    <input data-form-part="product_form"
+                                    type="number"
+                                    class="wk-slot-qty admin__control-text"
+                                    name="info[<?= $escaper->escapeHtml($index); ?>][slot_qty]"
+                                    value="0">
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<?php
+$data =  $helper->getSerializedString([
+    "startSelectHtml" => $startSelectHtml,
+    "endSelectHtml" => $endSelectHtml,
+    "selectCounts" => $selectCounts
+]);
+?>
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "Mavenbird_BookingSystem/js/bookingsystem": <?= /* @noEscape */ $data ?>
+        }
+    }
+</script>
+<script>
+    jQuery('body').trigger('contentUpdated');
+</script>
