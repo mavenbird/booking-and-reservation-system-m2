@@ -565,7 +565,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
     {
         $html = "";
         try {
-            $htmlClass = "admin__control-select wk-day-select";
+            $htmlClass = "admin__control-select mb-day-select";
             $days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             $html .= "<select data-form-part='product_form' class='".$htmlClass."' name='".$name."'>";
             foreach ($days as $day) {
@@ -1251,14 +1251,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
                 $year = $this->getCurrentYear();
             }
 
-            $html = "<div class='wk-calendar-title wk-title-".$productId."'>";
+            $html = "<div class='mb-calendar-title mb-title-".$productId."'>";
             if ($prev) {
-                $html .= "<span class='wk-previous-cal'></span>";
+                $html .= "<span class='mb-previous-cal'></span>";
             }
 
             $html .= __($this->getMonth($month, $year)).' '.$year;
             if ($next) {
-                $html .= "<span class='wk-next-cal'></span>";
+                $html .= "<span class='mb-next-cal'></span>";
             }
 
             $html .= '</div>';
@@ -1277,9 +1277,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
     public function getCalendarHeader()
     {
         try {
-            $html = "<div class='wk-calendar-head'>";
+            $html = "<div class='mb-calendar-head'>";
             foreach ($this->dayLabels as $label) {
-                $html .= "<div class='wk-calendar-col' title='".__($label)."'>".__($label).'</div>';
+                $html .= "<div class='mb-calendar-col' title='".__($label)."'>".__($label).'</div>';
             }
 
             $html .= '</div>';
@@ -1412,21 +1412,21 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
             $currentYear = $this->getCurrentYear();
 
             if ($year < $currentYear) {
-                $dayClass = 'wk-passed-day';
+                $dayClass = 'mb-passed-day';
             } elseif ($year == $currentYear) {
                 if ($month < $currentMonth) {
-                    $dayClass = 'wk-passed-day';
+                    $dayClass = 'mb-passed-day';
                 } elseif ($month == $currentMonth) {
                     if ($day < $currentDay) {
-                        $dayClass = 'wk-passed-day';
+                        $dayClass = 'mb-passed-day';
                     } else {
-                        $dayClass = 'wk-available-day';
+                        $dayClass = 'mb-available-day';
                     }
                 } else {
-                    $dayClass = 'wk-available-day';
+                    $dayClass = 'mb-available-day';
                 }
             } else {
-                $dayClass = 'wk-available-day';
+                $dayClass = 'mb-available-day';
             }
         } catch (\Exception $e) {
             $this->logDataInLogger("Helper_Data getDayClass : ".$e->getMessage());
@@ -1452,18 +1452,18 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
             $month = $this->validateEntry($month, $this->getCurrentMonth());
             $year = $this->validateEntry($year, $this->getCurrentYear());
             $month = $this->getMonthValue($month);
-            $html = "<div class='wk-calendar-conatiner ".$class."'>";
+            $html = "<div class='mb-calendar-conatiner ".$class."'>";
             $html .= $this->getCalendarTitle($month, $year, $productId, $prev, $next);
-            $html .= "<div class='wk-calendar-content'>";
+            $html .= "<div class='mb-calendar-content'>";
             $html .= $this->getCalendarHeader();
-            $html .= "<div class='wk-calendar-body'>";
+            $html .= "<div class='mb-calendar-body'>";
             $weeksInMonth = $this->weeksInMonth($month, $year);
             $daysInMonth = $this->daysInMonth($month, $year);
             $month = $this->getIndexedMonth($month);
             $k = 0;
             $bookingClass = '';
 
-            $defaultClass = "wk-calendar-cell wk-day ";
+            $defaultClass = "mb-calendar-cell mb-day ";
             $parentId = $this->getParentSlotId($productId);
             $slots = $this->getSlots($productId);
             $preventBookingBefore = $this->getBookingInfo($productId)['prevent_booking_before']??'0';
@@ -1477,7 +1477,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
             }
             $bookedSlots = $this->getBookedSlotsQty($parentId);
             for ($i = 0; $i < $weeksInMonth; ++$i) {
-                $html .= "<div class='wk-calendar-row'>";
+                $html .= "<div class='mb-calendar-row'>";
                 for ($j = 1; $j <= 7; ++$j) {
                     $day = $i * 7 + $j;
                     $startDay = $this->getStartDay($month, $year);
@@ -1486,12 +1486,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
                         $dateDay = $this->getIndexedDay($k);
                         $date = $year."-".$month."-".$dateDay;
                         $dayClass = $this->getDayClass($k, $month, $year);
-                        $html .= "<div class='wk-calendar-col'>";
+                        $html .= "<div class='mb-calendar-col'>";
 
                         $bookingClass = "slot-not-available";
                         $allBooked = "";
 
-                        if (array_key_exists($date, $slots) && $dayClass=='wk-available-day') {
+                        if (array_key_exists($date, $slots) && $dayClass=='mb-available-day') {
                             $info = $slots[$date];
                             $allBooked = $this->getAllSlotsBookedClass($info, $bookedSlots);
                             $notAvailable = $this->getBookingClass($info);
@@ -1510,7 +1510,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
                         $html .= '</div>';
                         $html .= '</div>';
                     } else {
-                        $html .= "<div class='wk-calendar-col'></div>";
+                        $html .= "<div class='mb-calendar-col'></div>";
                     }
                 }
 
@@ -1732,7 +1732,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
                         $month == $this->getCurrentMonth()
                         &&
                         $year == $this->getCurrentYear()
-                        ) ? 'wk-current-month' : '';
+                        ) ? 'mb-current-month' : '';
                     $html .= $this->getCalendar($month, $year, $productId, $prev, $next, $class);
                     $year = $this->resetYear($month, $year);
                     $count++;
@@ -1743,7 +1743,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
                 for ($month = $startMonth; $month <= $endMonth; $month++) {
                     $prev = $this->isPrevAllowed($count, $totalMonths, 1);
                     $next = $this->isNextAllowed($count, $totalMonths, 1);
-                    $class = ($month == $this->getCurrentMonth()) ? 'wk-current-month' : '';
+                    $class = ($month == $this->getCurrentMonth()) ? 'mb-current-month' : '';
                     $html .= $this->getCalendar($month, $endYear, $productId, $prev, $next, $class);
                     $count++;
                 }
@@ -2415,7 +2415,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper implements Argum
         list($year,$month,$day) = explode('-', $date);
         $dayClass = $this->getDayClass($day, $month, $year);
 
-        if (array_key_exists($date, $slots) && $dayClass=='wk-available-day') {
+        if (array_key_exists($date, $slots) && $dayClass=='mb-available-day') {
             $info = $slots[$date];
             $allBooked = $this->getAllSlotsBookedClass($info, $bookedSlots);
             $notAvailable = $this->getBookingClass($info);

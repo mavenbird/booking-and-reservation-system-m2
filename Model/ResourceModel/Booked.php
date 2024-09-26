@@ -33,7 +33,7 @@ class Booked extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('wk_bs_booking_booked', 'id');
+        $this->_init('mb_bs_booking_booked', 'id');
     }
 
     /**

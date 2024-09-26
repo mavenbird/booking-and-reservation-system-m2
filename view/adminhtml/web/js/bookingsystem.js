@@ -78,7 +78,7 @@ define([
                 var startSelectHtml = self.options.startSelectHtml;
                 var endSelectHtml = self.options.endSelectHtml;
                 var selectCounts = self.options.selectCounts;
-                manageSlotsQtyFields($("#wk-slot-has-quantity"));
+                manageSlotsQtyFields($("#mb-slot-has-quantity"));
                 showBookingPanel();
                 manageRequiredFields();
                 $(document).on("change", "#booking_type", function () {
@@ -86,7 +86,7 @@ define([
                     manageRequiredFields();
                 });
 
-                $(document).on("click", ".wk-obmd-m-inc", function () {
+                $(document).on("click", ".mb-obmd-m-inc", function () {
                     var val = $(this).parent().find("input").val();
                     if ($.isNumeric(val)) {
                         val++;
@@ -98,7 +98,7 @@ define([
                     }
                     $(this).parent().find("input").val(val);
                 });
-                $(document).on("click", ".wk-obmd-m-dec", function () {
+                $(document).on("click", ".mb-obmd-m-dec", function () {
                     var val = $(this).parent().find("input").val();
                     if ($.isNumeric(val)) {
                         val--;
@@ -110,7 +110,7 @@ define([
                     }
                     $(this).parent().find("input").val(val);
                 });
-                $(document).on("click", ".wk-obmd-h-inc", function () {
+                $(document).on("click", ".mb-obmd-h-inc", function () {
                     var val = $(this).parent().find("input").val();
                     if ($.isNumeric(val)) {
                         val++;
@@ -122,7 +122,7 @@ define([
                     }
                     $(this).parent().find("input").val(val);
                 });
-                $(document).on("click", ".wk-obmd-h-dec", function () {
+                $(document).on("click", ".mb-obmd-h-dec", function () {
                     var val = $(this).parent().find("input").val();
                     if ($.isNumeric(val)) {
                         val--;
@@ -134,10 +134,10 @@ define([
                     }
                     $(this).parent().find("input").val(val);
                 });
-                $(document).on("change", "#wk-slot-has-quantity", function () {
-                    manageSlotsQtyFields($("#wk-slot-has-quantity"));
+                $(document).on("change", "#mb-slot-has-quantity", function () {
+                    manageSlotsQtyFields($("#mb-slot-has-quantity"));
                 });
-                $(document).on("click", ".wk-btn", function () {
+                $(document).on("click", ".mb-btn", function () {
                     selectCounts++;
                     var startHtml = $(startSelectHtml).attr(
                         "name",
@@ -147,54 +147,54 @@ define([
                         "name",
                         "info[end][day][" + selectCounts + "]"
                     );
-                    manageSlotsQtyFields($("#wk-slot-has-quantity"));
+                    manageSlotsQtyFields($("#mb-slot-has-quantity"));
                     var html = $("<div>", {
-                        class: "wk-row wk-primary-row wk-text-center",
+                        class: "mb-row mb-primary-row mb-text-center",
                     });
                     html.append(
-                        $("<div>", { class: "wk-one-booking-col" }).append(
-                            $("<div>", { class: "wk-col-wrapper" })
+                        $("<div>", { class: "mb-one-booking-col" }).append(
+                            $("<div>", { class: "mb-col-wrapper" })
                                 .append(
                                     $("<div>", {
-                                        class: "wk-input-col",
+                                        class: "mb-input-col",
                                     }).append(startHtml)
                                 )
                                 .append(
-                                    $("<div>", { class: "wk-input-col" })
+                                    $("<div>", { class: "mb-input-col" })
                                         .append(
-                                            '<input data-form-part="product_form" class="wk-obmd-time admin__control-text" type="number" min="0" max="24" name="info[start][hour][' +
+                                            '<input data-form-part="product_form" class="mb-obmd-time admin__control-text" type="number" min="0" max="24" name="info[start][hour][' +
                                                 selectCounts +
                                                 ']" value="1">'
                                         )
                                         .append(
                                             $("<div>", {
-                                                class: "wk-dec wk-obmd-h-dec",
+                                                class: "mb-dec mb-obmd-h-dec",
                                                 text: "-",
                                             })
                                         )
                                         .append(
                                             $("<div>", {
-                                                class: "wk-inc wk-obmd-h-inc",
+                                                class: "mb-inc mb-obmd-h-inc",
                                                 text: "+",
                                             })
                                         )
                                 )
                                 .append(
-                                    $("<div>", { class: "wk-input-col" })
+                                    $("<div>", { class: "mb-input-col" })
                                         .append(
-                                            '<input data-form-part="product_form" class="wk-obmd-time admin__control-text" type="number" min="0" max="59" name="info[start][minute][' +
+                                            '<input data-form-part="product_form" class="mb-obmd-time admin__control-text" type="number" min="0" max="59" name="info[start][minute][' +
                                                 selectCounts +
                                                 ']" value="0">'
                                         )
                                         .append(
                                             $("<div>", {
-                                                class: "wk-dec wk-obmd-m-dec",
+                                                class: "mb-dec mb-obmd-m-dec",
                                                 text: "-",
                                             })
                                         )
                                         .append(
                                             $("<div>", {
-                                                class: "wk-inc wk-obmd-m-inc",
+                                                class: "mb-inc mb-obmd-m-inc",
                                                 text: "+",
                                             })
                                         )
@@ -203,62 +203,62 @@ define([
                     );
                     html.append(
                         $("<div>", {
-                            class: "wk-one-booking-remove-col wk-text-center",
-                        }).append('<div class="wk-remove">x</div>')
+                            class: "mb-one-booking-remove-col mb-text-center",
+                        }).append('<div class="mb-remove">x</div>')
                     );
                     html.append(
-                        $("<div>", { class: "wk-one-booking-col" }).append(
-                            $("<div>", { class: "wk-col-wrapper" })
+                        $("<div>", { class: "mb-one-booking-col" }).append(
+                            $("<div>", { class: "mb-col-wrapper" })
                                 .append(
                                     $("<div>", {
-                                        class: "wk-input-col",
+                                        class: "mb-input-col",
                                     }).append(endHtml)
                                 )
                                 .append(
-                                    $("<div>", { class: "wk-input-col" })
+                                    $("<div>", { class: "mb-input-col" })
                                         .append(
-                                            '<input data-form-part="product_form" class="wk-obmd-time admin__control-text" type="number" min="0" max="24" name="info[end][hour][' +
+                                            '<input data-form-part="product_form" class="mb-obmd-time admin__control-text" type="number" min="0" max="24" name="info[end][hour][' +
                                                 selectCounts +
                                                 ']" value="1">'
                                         )
                                         .append(
                                             $("<div>", {
-                                                class: "wk-dec wk-obmd-h-dec",
+                                                class: "mb-dec mb-obmd-h-dec",
                                                 text: "-",
                                             })
                                         )
                                         .append(
                                             $("<div>", {
-                                                class: "wk-inc wk-obmd-h-inc",
+                                                class: "mb-inc mb-obmd-h-inc",
                                                 text: "+",
                                             })
                                         )
                                 )
                                 .append(
-                                    $("<div>", { class: "wk-input-col" })
+                                    $("<div>", { class: "mb-input-col" })
                                         .append(
-                                            '<input data-form-part="product_form" class="wk-obmd-time admin__control-text" type="number" min="0" max="59" name="info[end][minute][' +
+                                            '<input data-form-part="product_form" class="mb-obmd-time admin__control-text" type="number" min="0" max="59" name="info[end][minute][' +
                                                 selectCounts +
                                                 ']" value="0">'
                                         )
                                         .append(
                                             $("<div>", {
-                                                class: "wk-dec wk-obmd-m-dec",
+                                                class: "mb-dec mb-obmd-m-dec",
                                                 text: "-",
                                             })
                                         )
                                         .append(
                                             $("<div>", {
-                                                class: "wk-inc wk-obmd-m-inc",
+                                                class: "mb-inc mb-obmd-m-inc",
                                                 text: "+",
                                             })
                                         )
                                 )
                                 .append(
                                     $("<div>", {
-                                        class: "wk-input-col",
+                                        class: "mb-input-col",
                                     }).append(
-                                        '<input data-form-part="product_form" class="wk-slot-qty admin__control-text" type="number" min="0" name="info[slot_qty][' +
+                                        '<input data-form-part="product_form" class="mb-slot-qty admin__control-text" type="number" min="0" name="info[slot_qty][' +
                                             selectCounts +
                                             ']" value="0">'
                                     )
@@ -266,16 +266,16 @@ define([
                         )
                     );
 
-                    $(".wk-one-booking-panel").append(html);
-                    manageSlotsQtyFields($("#wk-slot-has-quantity"));
+                    $(".mb-one-booking-panel").append(html);
+                    manageSlotsQtyFields($("#mb-slot-has-quantity"));
                 });
-                $(document).on("click", ".wk-remove", function () {
+                $(document).on("click", ".mb-remove", function () {
                     $(this).parent().parent().remove();
                 });
 
                 $(document).on(
                     "keyup change",
-                    ".wk-mbod-time,.wk-obmd-time",
+                    ".mb-mbod-time,.mb-obmd-time",
                     function () {
                         if (
                             parseInt($(this).val()) >
@@ -325,54 +325,54 @@ define([
             function showBookingPanel() {
                 var val = $("#booking_type").val();
                 if (val == 0) {
-                    $(".wk-secondary-container").hide();
+                    $(".mb-secondary-container").hide();
                 } else if (val == 1) {
-                    $(".wk-secondary-container").show();
-                    $(".wk-one-booking-container").hide();
+                    $(".mb-secondary-container").show();
+                    $(".mb-one-booking-container").hide();
                 } else {
-                    $(".wk-secondary-container").show();
-                    $(".wk-many-booking-container").hide();
+                    $(".mb-secondary-container").show();
+                    $(".mb-many-booking-container").hide();
                 }
             }
             function manageRequiredFields() {
                 var val = $("#booking_type").val();
-                manageSlotsQtyFields($("#wk-slot-has-quantity"));
-                $(".wk-bs").removeClass("required-entry");
+                manageSlotsQtyFields($("#mb-slot-has-quantity"));
+                $(".mb-bs").removeClass("required-entry");
                 if (val == 1) {
-                    $(".wk-bs").addClass("required-entry");
+                    $(".mb-bs").addClass("required-entry");
                 } else if (val == 2) {
-                    $(".wk-bs").addClass("required-entry");
-                    $(".wk-is").removeClass("required-entry");
+                    $(".mb-bs").addClass("required-entry");
+                    $(".mb-is").removeClass("required-entry");
                 }
             }
-            $(document).on('change', '.wk-status select', function(){
-                manageSlotsQtyFields($("#wk-slot-has-quantity"));
+            $(document).on('change', '.mb-status select', function(){
+                manageSlotsQtyFields($("#mb-slot-has-quantity"));
             })
             function manageSlotsQtyFields(el) {
                 var bookingType = $("#booking_type").val();
                 var val = el.val();
                 var validateNum = 'validate-greater-than-zero required-entry';
                 if (val != 0) {
-                    $(".wk-slot-qty").css("display", "block");
-                    $(".wk-slot-qty").find("input").show();
+                    $(".mb-slot-qty").css("display", "block");
+                    $(".mb-slot-qty").find("input").show();
                     if (bookingType == 1) {
-                        $('.wk-many-booing-table .wk-body .wk-row').each(function(){
-                            if ($(this).find('.wk-status select').val() == 1) {
-                                $(this).find("input.wk-slot-input").addClass(validateNum);
+                        $('.mb-many-booing-table .mb-body .mb-row').each(function(){
+                            if ($(this).find('.mb-status select').val() == 1) {
+                                $(this).find("input.mb-slot-input").addClass(validateNum);
                             } else {
-                                $(this).find("input.wk-slot-input").removeClass(validateNum);
+                                $(this).find("input.mb-slot-input").removeClass(validateNum);
                             }
                         });
-                        $("input.wk-slot-qty").removeClass(validateNum);
+                        $("input.mb-slot-qty").removeClass(validateNum);
                     } else if (bookingType == 2) {
-                        $("input.wk-slot-input").removeClass(validateNum);
-                        $("input.wk-slot-qty").addClass(validateNum);
+                        $("input.mb-slot-input").removeClass(validateNum);
+                        $("input.mb-slot-qty").addClass(validateNum);
                     }
                 } else {
-                    $(".wk-slot-qty").css("display", "none");
-                    $(".wk-slot-qty").find("input").hide();
-                    $("input.wk-slot-input").removeClass(validateNum);
-                    $("input.wk-slot-qty").removeClass(validateNum);
+                    $(".mb-slot-qty").css("display", "none");
+                    $(".mb-slot-qty").find("input").hide();
+                    $("input.mb-slot-input").removeClass(validateNum);
+                    $("input.mb-slot-qty").removeClass(validateNum);
                 }
             }
         },

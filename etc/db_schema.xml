@@ -20,7 +20,7 @@
  */
 -->
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-  <table name="wk_bs_booking_booked" resource="default" engine="innodb">
+  <table name="mb_bs_booking_booked" resource="default" engine="innodb">
     <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true"/>
     <column xsi:type="int" name="order_id" padding="11" unsigned="false" nullable="false" identity="false"/>
     <column xsi:type="int" name="order_item_id" padding="11" unsigned="false" nullable="false" identity="false"/>
@@ -38,7 +38,7 @@
       <column name="id"/>
     </constraint>
   </table>
-  <table name="wk_bs_booking_info" resource="default" engine="innodb">
+  <table name="mb_bs_booking_info" resource="default" engine="innodb">
     <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true"/>
     <column xsi:type="int" name="product_id" padding="11" unsigned="false" nullable="false" identity="false"/>
     <column xsi:type="varchar" name="start_date" nullable="false" length="255"/>
@@ -53,7 +53,7 @@
       <column name="id"/>
     </constraint>
   </table>
-  <table name="wk_bs_booking_slot" resource="default" engine="innodb">
+  <table name="mb_bs_booking_slot" resource="default" engine="innodb">
     <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true"/>
     <column xsi:type="int" name="product_id" padding="11" unsigned="false" nullable="false" identity="false"/>
     <column xsi:type="int" name="type" padding="11" unsigned="false" nullable="false" identity="false"/>
@@ -63,7 +63,7 @@
       <column name="id"/>
     </constraint>
   </table>
-  <table name="wk_bs_quote_item" resource="default" engine="innodb">
+  <table name="mb_bs_quote_item" resource="default" engine="innodb">
     <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true"/>
     <column xsi:type="int" name="item_id" padding="11" unsigned="false" nullable="false" identity="false"/>
     <column xsi:type="int" name="slot_id" padding="11" unsigned="false" nullable="false" identity="false"/>
@@ -73,7 +73,7 @@
       <column name="id"/>
     </constraint>
   </table>
-  <table name="wk_bs_booking_option_map" resource="default" engine="innodb">
+  <table name="mb_bs_booking_option_map" resource="default" engine="innodb">
     <column xsi:type="int" name="entity_id" padding="11" unsigned="false" nullable="false" identity="true"/>
     <column xsi:type="int" name="product_id" padding="11" unsigned="false" nullable="false" identity="false"/>
     <column xsi:type="int" name="from" padding="11" unsigned="false" nullable="false" identity="false"/>

@@ -51,41 +51,41 @@ $data =  $helper->getSerializedString([
     "prevent_booking_before" => $preventBookingBefore
 ]);
 ?>
-    <div class="wk-bg-container">
-        <div class="wk-box-modal">
-            <div class="wk-box-modal-bg">
-                <div class="wk-loader"></div>
+    <div class="mb-bg-container">
+        <div class="mb-box-modal">
+            <div class="mb-box-modal-bg">
+                <div class="mb-loader"></div>
             </div>
-            <div class="wk-modal-head">
-                <div class="wk-close">X</div>
-                <?= $escaper->escapeHtml(__("Select Slot To Book")); ?>
+            <div class="mb-modal-head">
+                <div class="mb-close">X</div>
+                <?= $escaper->escapeHtml(__("Select time slot for booking")); ?>
             </div>
-            <div class="wk-modal-body">
-                <div class="wk-wrapper">
-                    <div class="wk-calendar-container">
-                        <div class="wk-booking-table wk-calendar-table">
+            <div class="mb-modal-body">
+                <div class="mb-wrapper">
+                    <div class="mb-calendar-container">
+                        <div class="mb-booking-table mb-calendar-table">
                             <?= /** @noEscape */ $helper->getAllCalendars($productId); ?>
                         </div>
                     </div>
-                    <div class="wk-day-container">
-                        <div class="wk-booking-table">
-                            <div class="wk-booking-table-head">
-                                <div class="wk-selected-date-wrapper">
-                                    <div class="wk-selected-date"></div>
-                                    <div class="wk-selected-month-day">
-                                        <div class="wk-month"></div>
-                                        <div class="wk-selected-day"></div>
+                    <div class="mb-day-container">
+                        <div class="mb-booking-table">
+                            <div class="mb-booking-table-head">
+                                <div class="mb-selected-date-wrapper">
+                                    <div class="mb-selected-date"></div>
+                                    <div class="mb-selected-month-day">
+                                        <div class="mb-month"></div>
+                                        <div class="mb-selected-day"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="wk-booking-table-body">
+                            <div class="mb-booking-table-body">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="wk-modal-foot">
-                <div class="wk-notation-wrapper">
+            <div class="mb-modal-foot">
+                <div class="mb-notation-wrapper">
                     <label class="label"><?= $escaper->escapeHtml(__("Notation")) ?></label>
                     <div class="noations-group">
                         <span class="available-slots notation-slots">
@@ -99,13 +99,13 @@ $data =  $helper->getSerializedString([
                         </span>
                     </div>
                 </div>
-                <div class="wk-slots-summary-wrapper" style="display:none">
+                <div class="mb-slots-summary-wrapper" style="display:none">
                     <div class="slots-summary">
                         <label class="label"><?= $escaper->escapeHtml(__("Summary ")) ?></label>
                         <div class="booked-slot-summary"></div>
                     </div>
                     <div class="add cart button">
-                        <button type="button" class="wk-book action tocart primary">
+                        <button type="button" class="mb-book action tocart primary">
                             <?= $escaper->escapeHtml(__("Book Now")); ?>
                         </button>
                     </div>
@@ -117,10 +117,10 @@ $data =  $helper->getSerializedString([
 <div class="box-tocart">
     <div class="fieldset">
         <div class="actions">
-            <button id="wk-book-now"
+            <button id="mb-book-now"
                 type="button"
                 title="<?= $escaper->escapeHtml($buttonTitle) ?>"
-                class="wk-book-now action primary tocart">
+                class="mb-book-now action primary tocart">
                 <span><?= $escaper->escapeHtml($buttonTitle) ?></span>
             </button>
             <?= $block->getChildHtml('', true) ?>

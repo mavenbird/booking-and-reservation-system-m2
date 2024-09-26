@@ -29,7 +29,7 @@ define([
     return function (config) {
         $(document).on('click', 'tr._clickable', function (e) {
             e.preventDefault();
-            if ($(this).parent().parent().parent().find(".wk-book-now.action-configure").length != 0) {
+            if ($(this).parent().parent().parent().find(".mb-book-now.action-configure").length != 0) {
                 proId = $(this).find(".checkbox.admin__control-checkbox").val();
                 $.ajax({
                     url: config.getCalenderUrl,
@@ -37,14 +37,14 @@ define([
                     dataType: "json",
                     data: { product_id: proId * 1 },
                     success: function (data) {
-                        if ($(".wk-box-modal").length != 0) {
-                            $(".wk-box-modal").remove();
+                        if ($(".mb-box-modal").length != 0) {
+                            $(".mb-box-modal").remove();
                         }
                         var progressTmpl = mageTemplate('#calendar-template'), calenderHtml;
                         calenderHtml = progressTmpl({})
 
                         $(".modal-inner-wrap:first").append(calenderHtml);
-                        $(".wk-booking-table.wk-calendar-table").html(data.getCalender);
+                        $(".mb-booking-table.mb-calendar-table").html(data.getCalender);
                         $(".modal-content").hide();
                         $('[data-role="action"]').hide();
                         self.options = JSON.parse(data.data);
@@ -78,7 +78,7 @@ define([
                             .text("Booking Unavailable")
                             .css("color", "red")
                             .css("padding-top", "0px");
-                        $(".wk-booking-table-body")
+                        $(".mb-booking-table-body")
                             .html("No slots are available at the moment.")
                             .css("padding", "5%");
                         var slots = self.options.slots;
@@ -123,33 +123,33 @@ define([
                         var curr_year = d.getFullYear();
                         var todayDate =
                             curr_year + "-" + curr_month + "-" + curr_date;
-                        var todayElemnt = $(".wk-calendar-container")
-                            .find(".wk-calendar-col")
-                            .find(".wk-calendar-cell[data-date=" + todayDate + "]");
+                        var todayElemnt = $(".mb-calendar-container")
+                            .find(".mb-calendar-col")
+                            .find(".mb-calendar-cell[data-date=" + todayDate + "]");
                         if (todayElemnt.length) {
                             if ($(todayElemnt).hasClass("slot-available")) {
                                 var date = todayElemnt.attr("data-date");
                                 $(
-                                    ".wk-calendar-container .wk-calendar-col .wk-available-day.active"
+                                    ".mb-calendar-container .mb-calendar-col .mb-available-day.active"
                                 ).removeClass("active");
                                 todayElemnt.addClass("active");
                                 loadSlotsData(date);
                             } else {
                                 if (
                                     $(
-                                        ".wk-calendar-container .wk-calendar-col .slot-available"
+                                        ".mb-calendar-container .mb-calendar-col .slot-available"
                                     ).first().length
                                 ) {
                                     var date = $(
-                                        ".wk-calendar-container .wk-calendar-col .slot-available"
+                                        ".mb-calendar-container .mb-calendar-col .slot-available"
                                     )
                                         .first()
                                         .attr("data-date");
                                     $(
-                                        ".wk-calendar-container .wk-calendar-col .wk-available-day.active"
+                                        ".mb-calendar-container .mb-calendar-col .mb-available-day.active"
                                     ).removeClass("active");
                                     $(
-                                        ".wk-calendar-container .wk-calendar-col .slot-available"
+                                        ".mb-calendar-container .mb-calendar-col .slot-available"
                                     )
                                         .first()
                                         .addClass("active");
@@ -159,19 +159,19 @@ define([
                         } else {
                             if (
                                 $(
-                                    ".wk-calendar-container .wk-calendar-col .slot-available"
+                                    ".mb-calendar-container .mb-calendar-col .slot-available"
                                 ).first().length
                             ) {
                                 var date = $(
-                                    ".wk-calendar-container .wk-calendar-col .slot-available"
+                                    ".mb-calendar-container .mb-calendar-col .slot-available"
                                 )
                                     .first()
                                     .attr("data-date");
                                 $(
-                                    ".wk-calendar-container .wk-calendar-col .wk-available-day.active"
+                                    ".mb-calendar-container .mb-calendar-col .mb-available-day.active"
                                 ).removeClass("active");
                                 $(
-                                    ".wk-calendar-container .wk-calendar-col .slot-available"
+                                    ".mb-calendar-container .mb-calendar-col .slot-available"
                                 )
                                     .first()
                                     .addClass("active");
@@ -207,18 +207,18 @@ define([
                             var dateTo = item.booking_to.split(",");
                             var reservedQty = 0;
                             if (self.options.booking_type == 2) {
-                                var rowClass = "wk-row";
+                                var rowClass = "mb-row";
                             } else {
-                                var rowClass = "wk-row wk-many-row";
+                                var rowClass = "mb-row mb-many-row";
                             }
                             slotHtml += '<div class="' + rowClass + '">';
                             if (self.options.booking_type == 2) {
                                 slotHtml +=
-                                    '<div class="wk-col first">' +
-                                    '<span class="wk-label-days">' +
+                                    '<div class="mb-col first">' +
+                                    '<span class="mb-label-days">' +
                                     item.no_of_days +
                                     "</span>" +
-                                    '<span class="wk-label-days-text">' +
+                                    '<span class="mb-label-days-text">' +
                                     "<div>" +
                                     $t("Day") +
                                     "</div>" +
@@ -254,9 +254,9 @@ define([
                                 textQtyBox = $t("Selected");
                             }
                             slotHtml +=
-                                '<div class="wk-col middle">' +
-                                '<span class="wk-label-dates">' +
-                                '<span class="wk-span-from">';
+                                '<div class="mb-col middle">' +
+                                '<span class="mb-label-dates">' +
+                                '<span class="mb-span-from">';
                             if (self.options.booking_type == 2) {
                                 slotHtml +=
                                     "<div>" + dateFrom[0] + "</div>";
@@ -267,7 +267,7 @@ define([
                                 "</div>" +
                                 "</span>" +
                                 "<span>to</span>" +
-                                '<span class="wk-span-to">';
+                                '<span class="mb-span-to">';
                             if (self.options.booking_type == 2) {
                                 slotHtml += "<div>" + dateTo[0] + "</div>";
                             }
@@ -277,8 +277,8 @@ define([
                                 "</div>" +
                                 "</span>" +
                                 "</span>" +
-                                '<span class="wk-label-avl-qty">' +
-                                '<span class="wk-avl-text">' +
+                                '<span class="mb-label-avl-qty">' +
+                                '<span class="mb-avl-text">' +
                                 $t("Available :") +
                                 "</span>" +
                                 "<span>" +
@@ -287,53 +287,53 @@ define([
                                 "</span>" +
                                 "</div>";
                             slotHtml +=
-                                '<div class="wk-col last">' +
-                                '<span class="wk-booked-txt">' +
+                                '<div class="mb-col last">' +
+                                '<span class="mb-booked-txt">' +
                                 textQtyBox +
                                 "</span>" +
-                                '<input type="number" class="wk-qty" value="' +
+                                '<input type="number" class="mb-qty" value="' +
                                 reservedQty +
                                 '" data-current-id=' +
                                 key +
                                 " data-id=" +
                                 id +
                                 ">" +
-                                '<input type="hidden" name="wk-qty-booked-hide" value="' +
+                                '<input type="hidden" name="mb-qty-booked-hide" value="' +
                                 reservedQty +
-                                '" class="wk-qty-booked-hide">' +
+                                '" class="mb-qty-booked-hide">' +
                                 "</div>";
                             slotHtml += "</div>";
 
                             if (dateFormatted[0] < 10) {
                                 dateFormatted[0] = "0" + dateFormatted[0];
                             }
-                            $(".wk-booking-table-head")
-                                .find(".wk-selected-date")
+                            $(".mb-booking-table-head")
+                                .find(".mb-selected-date")
                                 .text(dateFormatted[0]);
-                            $(".wk-booking-table-head")
-                                .find(".wk-month")
+                            $(".mb-booking-table-head")
+                                .find(".mb-month")
                                 .text(month + " " + year);
-                            $(".wk-booking-table-head")
-                                .find(".wk-selected-day")
+                            $(".mb-booking-table-head")
+                                .find(".mb-selected-day")
                                 .text(day);
                         });
-                        $(".wk-booking-table-body").html(slotHtml);
+                        $(".mb-booking-table-body").html(slotHtml);
                     } else {
                         var slotHtml = "";
                         slotHtml =
-                            '<div class="wk-no-booking">' +
+                            '<div class="mb-no-booking">' +
                             data.msg +
                             "</div>";
-                        $(".wk-booking-table-body").html(slotHtml);
+                        $(".mb-booking-table-body").html(slotHtml);
                     }
                 },
             });
         }
-        $(document).on("click", ".wk-available-day", function (event) {
+        $(document).on("click", ".mb-available-day", function (event) {
             if ($(this).hasClass("slot-available")) {
                 var date = $(this).attr("data-date");
                 $(
-                    ".wk-calendar-container .wk-calendar-col .wk-available-day.active"
+                    ".mb-calendar-container .mb-calendar-col .mb-available-day.active"
                 ).removeClass("active");
                 $(this).addClass("active");
                 loadSlotsData(date);
@@ -341,19 +341,19 @@ define([
         });
 
 
-        $(document).on("click", ".wk-next-cal", function (event) {
+        $(document).on("click", ".mb-next-cal", function (event) {
             var currentCalendar = $(this).parent().parent();
             currentCalendar.hide();
             currentCalendar.next().show();
         });
 
-        $(document).on("click", ".wk-previous-cal", function (event) {
+        $(document).on("click", ".mb-previous-cal", function (event) {
             var currentCalendar = $(this).parent().parent();
             currentCalendar.hide();
             currentCalendar.prev().show();
         });
 
-        $(document).on("input", ".wk-qty", function (event) {
+        $(document).on("input", ".mb-qty", function (event) {
             var qtyBox = $(this);
             var regex = /^[0-9]*(?:\.\d{1,2})?$/; // allow only numbers [0-9]
             var qty = qtyBox.val();
@@ -363,7 +363,7 @@ define([
             var info = slots[id];
             var option = {};
             var cond = true;
-            var updatedQty = qtyBox.next(".wk-qty-booked-hide").val();
+            var updatedQty = qtyBox.next(".mb-qty-booked-hide").val();
             if (qty == 0) {
                 cond = false;
                 removeSelectedSlot(qtyBox, id);
@@ -392,17 +392,17 @@ define([
                     }
                 });
 
-                qtyBox.prev(".wk-booked-txt").text($t("Selected"));
+                qtyBox.prev(".mb-booked-txt").text($t("Selected"));
                 updatedQty = parseInt(qty);
-                qtyBox.next(".wk-qty-booked-hide").val(updatedQty);
+                qtyBox.next(".mb-qty-booked-hide").val(updatedQty);
 
                 var remainingQty = parseInt(info["qty"]);
                 if (remainingQty >= parseInt(qty)) {
                     remainingQty -= parseInt(qty);
                     qtyBox
                         .parent()
-                        .siblings(".wk-col.middle")
-                        .find(".wk-avl-text")
+                        .siblings(".mb-col.middle")
+                        .find(".mb-avl-text")
                         .next()
                         .text(remainingQty);
                 }
@@ -417,12 +417,12 @@ define([
                 }
 
                 if (
-                    $(".wk-modal-foot")
+                    $(".mb-modal-foot")
                         .find(".booked-slot-summary")
                         .find("div[data-booked-slot-id=" + id + "]")
                         .length
                 ) {
-                    $(".wk-modal-foot")
+                    $(".mb-modal-foot")
                         .find(".booked-slot-summary")
                         .find("div[data-booked-slot-id=" + id + "]")
                         .children("span")
@@ -439,14 +439,14 @@ define([
                             " " +
                             bookingTo
                         );
-                    $(".wk-modal-foot")
+                    $(".mb-modal-foot")
                         .find(".booked-slot-summary")
                         .find("div[data-booked-slot-id=" + id + "]")
                         .children("input")
                         .val(updatedQty);
                 } else {
-                    $(".wk-modal-foot").find(".booked-slot-summary").empty();
-                    $(".wk-modal-foot")
+                    $(".mb-modal-foot").find(".booked-slot-summary").empty();
+                    $(".mb-modal-foot")
                         .find(".booked-slot-summary")
                         .prepend(
                             $("<div>")
@@ -474,7 +474,7 @@ define([
                                 )
                         );
                 }
-                $(".wk-slots-summary-wrapper").show();
+                $(".mb-slots-summary-wrapper").show();
             } else if (
                 cond &&
                 qty == 0 &&
@@ -506,13 +506,13 @@ define([
                         .val();
                     quantityBox.val(0);
                     quantityBox
-                        .siblings(".wk-booked-txt")
+                        .siblings(".mb-booked-txt")
                         .text($t("Your Need"));
-                    quantityBox.siblings(".wk-qty-booked-hide").val(0);
+                    quantityBox.siblings(".mb-qty-booked-hide").val(0);
                     var availableQty = quantityBox
                         .parent()
                         .siblings(".middle")
-                        .find(".wk-label-avl-qty .wk-avl-text")
+                        .find(".mb-label-avl-qty .mb-avl-text")
                         .next()
                         .text();
                     availableQty =
@@ -521,7 +521,7 @@ define([
                         var availableQty = quantityBox
                             .parent()
                             .siblings(".middle")
-                            .find(".wk-label-avl-qty .wk-avl-text")
+                            .find(".mb-label-avl-qty .mb-avl-text")
                             .next()
                             .text(availableQty);
                     }
@@ -537,7 +537,7 @@ define([
                 if (
                     $("body").find(".booked-slot-summary").is(":empty")
                 ) {
-                    $("body").find(".wk-slots-summary-wrapper").hide();
+                    $("body").find(".mb-slots-summary-wrapper").hide();
                 }
             }
         }
@@ -551,47 +551,47 @@ define([
                     .data("booked-slot-id");
                 var bookedQty = $(this).siblings("input").val();
                 if (
-                    $(".wk-day-container").find(
-                        '.wk-qty[data-id="' + bookedSlotId + '"]'
+                    $(".mb-day-container").find(
+                        '.mb-qty[data-id="' + bookedSlotId + '"]'
                     ).length
                 ) {
-                    $(".wk-day-container")
-                        .find('.wk-qty[data-id="' + bookedSlotId + '"]')
+                    $(".mb-day-container")
+                        .find('.mb-qty[data-id="' + bookedSlotId + '"]')
                         .val(0);
-                    $(".wk-day-container")
-                        .find('.wk-qty[data-id="' + bookedSlotId + '"]')
-                        .siblings(".wk-booked-txt")
+                    $(".mb-day-container")
+                        .find('.mb-qty[data-id="' + bookedSlotId + '"]')
+                        .siblings(".mb-booked-txt")
                         .text($t("Your Need"));
-                    $(".wk-day-container")
-                        .find('.wk-qty[data-id="' + bookedSlotId + '"]')
-                        .siblings(".wk-qty-booked-hide")
+                    $(".mb-day-container")
+                        .find('.mb-qty[data-id="' + bookedSlotId + '"]')
+                        .siblings(".mb-qty-booked-hide")
                         .val(0);
-                    var availableQty = $(".wk-day-container")
-                        .find('.wk-qty[data-id="' + bookedSlotId + '"]')
+                    var availableQty = $(".mb-day-container")
+                        .find('.mb-qty[data-id="' + bookedSlotId + '"]')
                         .parent()
                         .siblings(".middle")
-                        .find(".wk-label-avl-qty .wk-avl-text")
+                        .find(".mb-label-avl-qty .mb-avl-text")
                         .next()
                         .text();
                     availableQty =
                         parseInt(availableQty) + parseInt(bookedQty);
                     if (availableQty >= 0) {
-                        var availableQty = $(".wk-day-container")
+                        var availableQty = $(".mb-day-container")
                             .find(
-                                '.wk-qty[data-id="' +
+                                '.mb-qty[data-id="' +
                                 bookedSlotId +
                                 '"]'
                             )
                             .parent()
                             .siblings(".middle")
-                            .find(".wk-label-avl-qty .wk-avl-text")
+                            .find(".mb-label-avl-qty .mb-avl-text")
                             .next()
                             .text(availableQty);
                     }
                 }
                 $(this).parent().remove();
                 if ($(".booked-slot-summary").is(":empty")) {
-                    $(".wk-slots-summary-wrapper").hide();
+                    $(".mb-slots-summary-wrapper").hide();
                 }
             }
         });
@@ -608,14 +608,14 @@ define([
         }
 
         function showLoader() {
-            $(".wk-box-modal-bg").show();
+            $(".mb-box-modal-bg").show();
         }
 
         function hideLoader() {
-            $(".wk-box-modal-bg").hide();
+            $(".mb-box-modal-bg").hide();
         }
 
-        $(document).on("click", ".wk-book", function (event) {
+        $(document).on("click", ".mb-book", function (event) {
             event.preventDefault();
             if (!$(".booked-slot-summary").is(":empty")) {
                 var slots = self.options.slots;

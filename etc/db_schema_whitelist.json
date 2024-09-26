@@ -1,5 +1,5 @@
 {
-    "wk_bs_booking_booked": {
+    "mb_bs_booking_booked": {
         "column": {
             "id": true,
             "order_id": true,
@@ -18,7 +18,7 @@
             "PRIMARY": true
         }
     },
-    "wk_bs_booking_info": {
+    "mb_bs_booking_info": {
         "column": {
             "id": true,
             "product_id": true,
@@ -35,7 +35,7 @@
             "PRIMARY": true
         }
     },
-    "wk_bs_booking_slot": {
+    "mb_bs_booking_slot": {
         "column": {
             "id": true,
             "product_id": true,
@@ -47,7 +47,7 @@
             "PRIMARY": true
         }
     },
-    "wk_bs_quote_item": {
+    "mb_bs_quote_item": {
         "column": {
             "id": true,
             "item_id": true,
@@ -59,7 +59,7 @@
             "PRIMARY": true
         }
     },
-    "wk_bs_booking_option_map": {
+    "mb_bs_booking_option_map": {
         "column": {
             "entity_id": true,
             "product_id": true,

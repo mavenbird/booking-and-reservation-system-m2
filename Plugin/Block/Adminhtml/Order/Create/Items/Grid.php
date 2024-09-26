@@ -49,7 +49,7 @@ class Grid
         if ($product->canConfigure()) {
             $options['onclick'] = sprintf('order.showQuoteItemConfiguration(%s)', $item->getId());
             if ($isBookingProduct) {
-                $options['class'] = $subject->escapeHtmlAttr('wk-book-now product_id-'.$product->getId());
+                $options['class'] = $subject->escapeHtmlAttr('mb-book-now product_id-'.$product->getId());
             }
         } else {
             $options['class'] = ' disabled';

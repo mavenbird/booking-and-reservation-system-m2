@@ -33,7 +33,7 @@ class Quote extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('wk_bs_quote_item', 'id');
+        $this->_init('mb_bs_quote_item', 'id');
     }
 
     /**

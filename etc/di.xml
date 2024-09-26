@@ -41,7 +41,7 @@
     </type>
     <type name="Mavenbird\BookingSystem\Model\ResourceModel\Booked\Grid\Collection">
         <arguments>
-            <argument name="mainTable" xsi:type="string">wk_bs_booking_booked</argument>
+            <argument name="mainTable" xsi:type="string">mb_bs_booking_booked</argument>
             <argument name="eventPrefix" xsi:type="string">bookingsystem_bookings_grid_collection</argument>
             <argument name="eventObject" xsi:type="string">bookings_grid_collection</argument>
             <argument name="resourceModel" xsi:type="string">Mavenbird\BookingSystem\Model\ResourceModel\Booked</argument>

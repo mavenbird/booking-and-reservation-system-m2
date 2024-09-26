@@ -61,7 +61,7 @@ class Product extends CoreProductSearchRenderer
             ) : 'disabled="disabled"';
             return sprintf(
                 '<a href="#" id="search-grid-product-' . $result
-                ->getId() . '" class="wk-book-now action-configure %s" %s>%s</a>',
+                ->getId() . '" class="mb-book-now action-configure %s" %s>%s</a>',
                 $style,
                 $prodAttributes,
                 __('Configure')

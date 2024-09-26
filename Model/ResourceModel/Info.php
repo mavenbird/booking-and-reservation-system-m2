@@ -31,7 +31,7 @@ class Info extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('wk_bs_booking_info', 'id');
+        $this->_init('mb_bs_booking_info', 'id');
     }
 
     /**
